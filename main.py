@@ -19,4 +19,19 @@ bot = commands.Bot(command_prefix='!', intents=intents)
 async def on_ready():
     print(f"We are ready to go in, {bot.user.name}")
 
+@bot.event
+async def on_message(message):
+    if message.author == bot.user:
+        return
+    
+    if "hai pa" in message.content.lower():
+        await message.channel.send("hai pa")
+    
+    await bot.process_commands(message)
+
+
+@bot.command()
+async def hello(ctx):
+    await ctx.send(f"Hello {ctx.author.mention}!")
+
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
