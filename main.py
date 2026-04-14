@@ -14,6 +14,7 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
+jail_channel = "PUSCARIE"
 
 @bot.event
 async def on_ready():
@@ -31,7 +32,7 @@ async def on_message(message):
 
 
 @bot.command()
-async def hello(ctx):
-    await ctx.send(f"Hello {ctx.author.mention}!")
+async def jail(message):
+    await message.author.edit(voice_channel=jail_channel)
 
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
