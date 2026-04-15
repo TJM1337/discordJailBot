@@ -35,4 +35,8 @@ async def on_message(message):
 async def jail(message):
     await message.author.edit(voice_channel=jail_channel)
 
+@bot.command()
+async def dm(ctx, *, msg):
+    await ctx.author.send(f"You said {msg}")
+
 bot.run(token, log_handler=handler, log_level=logging.DEBUG)
