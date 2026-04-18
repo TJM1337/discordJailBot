@@ -3,6 +3,8 @@ from discord.ext import commands
 import logging
 from dotenv import load_dotenv
 import os
+import time
+import asyncio
 
 load_dotenv()
 token = os.getenv('DISCORD_TOKEN')
@@ -14,7 +16,6 @@ intents.message_content = True
 intents.members = True
 
 bot = commands.Bot(command_prefix='!', intents=intents)
-jail_channel = "PUSCARIE"
 
 @bot.event
 async def on_ready():
@@ -32,8 +33,17 @@ async def on_message(message):
 
 
 @bot.command()
-async def jail(message):
-    await message.author.edit(voice_channel=jail_channel)
+async def jail(ctx, member: discord.Member, seconds: int):
+    jail_channel = discord.utils.get(ctx.guild.voice_channels, name="PUSCARIE")
+
+    await ctx.send(f"o7 {member} for {seconds}s")
+
+    for i in range(seconds):
+        await member.move_to(jail_channel)
+        await asyncio.sleep(1)
+
+    await bot.process_commands(ctx)
+
 
 @bot.command()
 async def dm(ctx, *, msg):
